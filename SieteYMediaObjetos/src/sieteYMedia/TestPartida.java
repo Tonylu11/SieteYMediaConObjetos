@@ -36,29 +36,31 @@ import utiles.Teclado;
  * @author Antonio Luque Bravo
  * @version 1.0
  */
-public class TestBaraja {
+public class TestPartida {
 	public static void main(String[] args) {
+		Jugador jugador1 = generarJugador();
+		Jugador jugador2 = generarJugador();
 		do {
-			double acumulador = 0;
-			Baraja baraja = new Baraja();
-			System.out.println(generarJugador());
-			do {
-				acumulador = partida(acumulador, baraja);
-			} while (acumulador < 7.5 && Teclado.deseaContinuar());
-			System.out.println("Puntuacion final de la partida: " + acumulador
-					+ " pts");
+			Partida partida = new Partida(jugador1, jugador2);
+			turno(partida, jugador1);
+			turno(partida, jugador2);
+			partida.hallarGanador();
+			System.out.println("Puntuación final: \n" + jugador1.getNombre()
+					+ ": " + jugador1.getPuntuacion() + " puntos.\n"
+					+ jugador2.getNombre() + ": " + jugador2.getPuntuacion()
+					+ " puntos.");
 		} while (Teclado.deseaContinuar());
 	}
 
 	/**
-	 * Genera a un jugador para la partida, pidiendole su alias.
+	 * Genera un jugador para la partida, pidiendole su alias.
 	 * 
 	 * @return devuelve el jugador.
 	 */
 	private static Jugador generarJugador() {
-		Jugador jugador1 = new Jugador(
+		Jugador jugador = new Jugador(
 				Teclado.leerCadena("Introduce el nombre del jugador"));
-		return jugador1;
+		return jugador;
 	}
 
 	/**
@@ -70,14 +72,30 @@ public class TestBaraja {
 	 *            Baraja de la Siete y Media.
 	 * @return devuelve los puntos que ha conseguido el jugador.
 	 */
-	private static double partida(double acumulador, Baraja baraja) {
-		double puntuacion;
-		System.out.println("Sacando una carta..\n");
-		puntuacion = sacarCarta(baraja);
-		acumulador += puntuacion;
-		System.out.println("Llevas " + acumulador + " puntos en la partida.");
-		comprobarPuntuacion(acumulador);
-		return acumulador;
+	private static void turno(Partida partida, Jugador jugador) {
+		double puntuacion = 0;
+		do {
+			System.out.println("Es tu turno " + jugador.getNombre());
+			puntuacion += partida.sacarCarta(partida.baraja);
+			jugador.setPuntuacion(puntuacion);
+			System.out.println("Puntuación hasta ahora: "
+					+ jugador.getPuntuacion());
+		} while (comprobarPuntuacion(jugador) && Teclado.deseaContinuar());
+
+	}
+
+	private static boolean comprobarPuntuacion(Jugador jugador) {
+		if (jugador.getPuntuacion() < 7.5)
+			return true;
+		if (jugador.getPuntuacion() == 7.5) {
+			System.out
+					.println("Has ganado. Has llegado a 7.5. Felicidades!!\n-------------------------");
+			return false;
+		} else {
+			System.out
+					.println("Has perdido. Te has pasado de 7.5.\n-------------------------");
+			return false;
+		}
 	}
 
 	/**
@@ -94,21 +112,6 @@ public class TestBaraja {
 		System.out.println("Tu carta es: " + carta + "Lo que equivale a "
 				+ puntuacion + " puntos.");
 		return puntuacion;
-	}
-
-	/**
-	 * Comprueba la puntuaci&oaute;n que acumula el jugador en la partida.
-	 * 
-	 * @param acumulador
-	 *            puntos acumulados por el jugador.
-	 */
-	private static void comprobarPuntuacion(double acumulador) {
-		if (acumulador == 7.5)
-			System.out
-					.println("Conseguiste 7 puntos y medio, has ganado. Enhorabuena!");
-		else if (acumulador > 7.5)
-			System.out
-					.println("Sobrepasaste los 7 puntos y medio, has perdido.");
 	}
 
 }

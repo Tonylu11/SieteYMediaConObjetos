@@ -23,7 +23,7 @@ public class Baraja {
 		int i = 0;
 		for (Palos palo : Palos.values())
 			for (Figuras figura : Figuras.values())
-				cartas[i++] = new Carta(palo, figura, figura.getPuntos());
+				cartas[i++] = new Carta(palo, figura);
 	}
 
 	/**

@@ -11,6 +11,7 @@ public class Jugador {
 	 * Nombre del jugador.
 	 */
 	private String nombre;
+	private double puntuacion;
 
 	/**
 	 * Costructor para generar un jugador.
@@ -32,13 +33,15 @@ public class Jugador {
 		this.nombre = nombre;
 	}
 
-	/**
-	 * M%eacute;todo para mostrar una salutaci&oacute;n junto al nombre del
-	 * jugador.
-	 */
-	@Override
-	public String toString() {
-		return "Bienvenido " + nombre;
+	public String getNombre() {
+		return nombre;
 	}
 
+	public void setPuntuacion(double puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+
+	public double getPuntuacion() {
+		return puntuacion;
+	}
 }

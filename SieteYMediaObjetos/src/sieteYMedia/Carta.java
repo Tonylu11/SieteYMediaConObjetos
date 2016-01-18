@@ -15,10 +15,6 @@ public class Carta {
 	 * Figura de la carta.
 	 */
 	private Figuras figura;
-	/**
-	 * Valor de la carta.
-	 */
-	private double valor;
 
 	/**
 	 * Constructor para la clase Carta.
@@ -30,19 +26,29 @@ public class Carta {
 	 * @param valor
 	 *            valor de la figura de la carta.
 	 */
-	Carta(Palos palo, Figuras figura, double valor) {
+	Carta(Palos palo, Figuras figura) {
 		this.palo = palo;
 		this.figura = figura;
-		this.valor = figura.getPuntos();
 	}
 
-	/**
-	 * Obtiene el valor de la figura de la carta.
-	 * 
-	 * @return devuelve el valor de la figura de la carta.
-	 */
-	double getValor() {
-		return valor;
+	public Palos getPalo() {
+		return palo;
+	}
+
+	public void setPalo(Palos palo) {
+		this.palo = palo;
+	}
+
+	public Figuras getFigura() {
+		return figura;
+	}
+
+	public void setFigura(Figuras figura) {
+		this.figura = figura;
+	}
+
+	public double getValor() {
+		return figura.getPuntos();
 	}
 
 	/**
